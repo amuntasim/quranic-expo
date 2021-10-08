@@ -1,0 +1,24 @@
+{
+  "appName": "Quranic",
+  "navigation": {
+    "home": "Home",
+    "chapters": "Chapters",
+    "misc": "Misc",
+    "settings": "Settings"
+  },
+  "home": {
+    "welcome": "Welcome to %{appName}!"
+  },
+  "language": "Language",
+  "languages": {
+    "en": "English",
+    "bn": "বাংলা"
+  },
+  "lessonsSource": "Lessons source",
+  "lessonsSources": {
+    "ad-dhikr-en": "Dar-adh-Dhikr (English)",
+    "ad-dhikr-bn": "Dar-adh-Dhikr (বাংলা)",
+    "al-quraner-vasha-en": "Al Quraner Vasha (English)",
+    "al-quraner-vasha-bn": "Al Quraner Vasha (বাংলা)"
+  }
+}

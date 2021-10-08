@@ -1,0 +1,24 @@
+{
+  "appName": "Quranic",
+  "navigation": {
+    "home": "হোম",
+    "chapters": "অধ্যায়",
+    "misc": "Misc",
+    "settings": "সেটিংস"
+  },
+  "home": {
+    "welcome": "Welcome to %{appName}!"
+  },
+  "language": "ভাষা",
+  "languages": {
+    "en": "English",
+    "bn": "বাংলা"
+  },
+  "lessonsSource": "বিষয়বস্তুর উৎস",
+  "lessonsSources": {
+    "ad-dhikr-en": "দার্ আয্-যিক্\u200Cর   (English)",
+    "ad-dhikr-bn": "দার্ আয্-যিক্\u200Cর   (বাংলা)",
+    "al-quraner-vasha-en": "আল কুরআনের ভাষা (English)",
+    "al-quraner-vasha-bn": "আল কুরআনের ভাষা (বাংলা)"
+  }
+}

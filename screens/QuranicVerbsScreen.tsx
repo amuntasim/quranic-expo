@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Styles from '../components/Styles';
 
-import {Text} from '../components/Themed';
-import {Alert, FlatList, Modal, Picker, SafeAreaView, TextInput, View} from "react-native";
+import {Text, View} from '../components/Themed';
+import {Alert, FlatList, Modal, Picker, SafeAreaView, TextInput, } from "react-native";
 import QuranicVerbsManager from '../managers/QuranicVerbsManager';
 import {Ionicons} from "@expo/vector-icons";
 // import * as RNFS from "react-native-fs";
@@ -173,7 +173,7 @@ export default function QuranicVerbsScreen(props: any) {
         </ListItem>
     );
     return (
-        <SafeAreaView style={[Styles.container, {padding: 0}]}>
+        <View style={Styles.container}>
             <Modal
                 animationType={"slide"}
                 transparent={false}
@@ -215,7 +215,7 @@ export default function QuranicVerbsScreen(props: any) {
                 renderItem={renderItem}
                 keyExtractor={item => `${item.id}`}
             />
-        </SafeAreaView>
+        </View>
     );
 }
 

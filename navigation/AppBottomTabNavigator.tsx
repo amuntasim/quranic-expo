@@ -7,18 +7,11 @@ import {Ionicons} from '@expo/vector-icons';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import * as React from 'react';
-import {useContext} from 'react';
-import {Text, View} from 'react-native';
+import {Text} from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import HomeScreen from '../screens/HomeScreen';
-import {CartScreen} from '../screens/CartScreen';
-import AccountScreen from '../screens/AccountScreen/AccountScreen';
-import AccountSettingsScreen from '../screens/AccountScreen/AccountSettingsScreen';
-import MyOrdersScreen from "../screens/AccountScreen/MyOrdersScreen";
-import AuthContext from "../context/auth";
-import CartContext from "../context/cart";
 import ChaptersScreen from '../screens/ChaptersScreen';
 import MiscScreen from '../screens/MiscScreen';
 import SettingsScreen from '../screens/SettingsScreen';
@@ -27,7 +20,7 @@ import AssessmentListScreen from '../screens/AssessmentListScreen';
 import QuranicVerbsScreen from '../screens/QuranicVerbsScreen';
 
 
-import {BottomTabParamList, HomeParamList, ChaptersParamList, MiscParamList, SettingsParamList} from '../types';
+import {BottomTabParamList, ChaptersParamList, HomeParamList, MiscParamList, SettingsParamList} from '../types';
 
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -58,9 +51,24 @@ const NotificationTabBarIcon = (props: any) => (
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const HomeStack = createStackNavigator<HomeParamList>();
 
+function headerOptions() {
+    const colorScheme = useColorScheme();
+    return {
+        headerStatusBarHeight:25,
+
+        headerStyle: {
+            backgroundColor: Colors[colorScheme].headerBgColor,
+        },
+        headerTintColor: Colors[colorScheme].headerTintColor,
+        headerTitleStyle: {
+            fontWeight: 'bold',
+        }
+    }
+}
+
 function HomeNavigator() {
     return (
-        <HomeStack.Navigator>
+        <HomeStack.Navigator screenOptions={{...headerOptions()}}>
             <HomeStack.Screen
                 name="HomeScreen"
                 component={HomeScreen}
@@ -74,7 +82,7 @@ const ChaptersStack = createStackNavigator<ChaptersParamList>();
 
 function ChaptersNavigator() {
     return (
-        <ChaptersStack.Navigator>
+        <ChaptersStack.Navigator screenOptions={{...headerOptions()}}>
             <ChaptersStack.Screen
                 name="ChaptersScreen"
                 component={ChaptersScreen}
@@ -88,11 +96,12 @@ function ChaptersNavigator() {
         </ChaptersStack.Navigator>
     );
 }
+
 const MiscStack = createStackNavigator<MiscParamList>();
 
 function MiscNavigator() {
     return (
-        <MiscStack.Navigator>
+        <MiscStack.Navigator screenOptions={{...headerOptions()}}>
             <MiscStack.Screen
                 name="MiscScreen"
                 component={MiscScreen}
@@ -111,6 +120,7 @@ function MiscNavigator() {
         </MiscStack.Navigator>
     );
 }
+
 const SettingsStack = createStackNavigator<SettingsParamList>();
 
 function SettingsNavigator(props: any) {
@@ -125,7 +135,7 @@ function SettingsNavigator(props: any) {
 
 
     return (
-        <SettingsStack.Navigator>
+        <SettingsStack.Navigator screenOptions={{...headerOptions()}}>
             <SettingsStack.Screen
                 name="SettingsScreen"
                 component={SettingsScreen}
@@ -149,7 +159,14 @@ export default function AppBottomTabNavigator() {
     return (
         <BottomTab.Navigator
             initialRouteName="Home"
-            tabBarOptions={{activeTintColor: Colors[colorScheme].tint}}>
+            tabBarOptions={{
+                activeTintColor: Colors[colorScheme].tint,
+                activeBackgroundColor: Colors[colorScheme].background,
+                inactiveBackgroundColor: Colors[colorScheme].background,
+                style: {
+                    backgroundColor: Colors[colorScheme].background,
+                }
+            }}>
             <BottomTab.Screen
                 name="Home"
                 component={HomeNavigator}
@@ -174,7 +191,7 @@ export default function AppBottomTabNavigator() {
 
             <BottomTab.Screen
                 name="Settings"
-                children={() => <SettingsNavigator screenData={{reloading: reloadTabs}} />}
+                children={() => <SettingsNavigator screenData={{reloading: reloadTabs}}/>}
                 options={{
                     tabBarIcon: ({color}) => <TabBarIcon name="ios-cog" color={color}/>,
                 }}

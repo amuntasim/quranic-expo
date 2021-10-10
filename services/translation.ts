@@ -1,7 +1,14 @@
-// import LocalizedStrings from 'react-native-localization';
-// import en from '../locales/en.json';
-// import bn from '../locales/bn.json';
-// import PreferenceManager from '../managers/PreferenceManager';
+import * as Localization from 'expo-localization';
+// @ts-ignore
+import i18n from 'i18n-js';
+
+import en from '../locales/en.json';
+import bn from '../locales/bn.json';
+
+import PreferenceManager from '../managers/PreferenceManager';
+i18n.fallbacks = true;
+i18n.translations = { en, bn };
+i18n.locale = Localization.locale;
 //
 // const translation = new LocalizedStrings({
 //     en: en,
@@ -16,4 +23,4 @@
 //     changeLanguage(language);
 // })
 
-export default {};
+export default i18n;

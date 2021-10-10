@@ -1,11 +1,10 @@
-// import * as RNFS from 'react-native-fs';
+import * as RNFS from 'react-native-fs';
 
 import PreferenceManager from './PreferenceManager';
 
 async function baseChapters(opts: any) {
     // const rootPath = Platform.OS === 'ios' ? RNFS.MainBundlePath : RNFS.DocumentDirectoryPath;
-    // const chapters = await RNFS.readdir(await _baseChapterspath());
-    const chapters: any[] = []
+    const chapters = await RNFS.readdir(await _baseChapterspath());
     console.log(chapters)
     // const dirs = await RNFS.readDir(RNFS.DocumentDirectoryPath)
     // let assetsExist =    await RNFS.existsAssets('test2.txt')
@@ -36,21 +35,20 @@ async function baseChapters(opts: any) {
 
 async function chapterDetail(opts: any) {
     const filePath = await _baseChapterspath() +'/'+ opts.path;
-    // const index = decodeURIComponent(await RNFS.readFile(filePath+'/index.json'));
-    // const sections = decodeURIComponent(await RNFS.readFile(filePath+'/sections.json'));
+    const index = decodeURIComponent(await RNFS.readFile(filePath+'/index.json'));
+    const sections = decodeURIComponent(await RNFS.readFile(filePath+'/sections.json'));
     let assessments = null
     try{
         // assessments = decodeURIComponent(await RNFS.readFileAssets(opts.path+'/assessments.json'));
     } catch(e){}
-    // return {index, sections, assessments};
-    return {index:{}, sections:[], assessments};
+    return {index, sections, assessments};
 }
 
 async function _baseChapterspath() {
     // const language = await PreferenceManager.languagePref();
     const lessonsSource = await PreferenceManager.lessonsSource();
     console.log('lessonsSource', lessonsSource)
-    return ''//`${RNFS.DocumentDirectoryPath}/chapters/${lessonsSource}/${lessonsSource}/chapters`;
+    return `${RNFS.DocumentDirectoryPath}/chapters/${lessonsSource}/${lessonsSource}/chapters`;
 }
 
 export default {

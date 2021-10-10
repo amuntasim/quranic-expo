@@ -1,29 +1,33 @@
-import DefaultPreference from 'react-native-default-preference';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import Constant from "../constants/Values";
 
+const languageKey = '@qrnc/prefs/language';
+const lessonsSourceKey = '@qrnc/prefs/lessonsSource';
+const lessonsSourcesChangedKey = '@qrnc/prefs/lessonsSourcesChanged';
+
 async function languagePref() {
-    return (await DefaultPreference.get('language') || Constant.defaultLanguage);
+    return (await AsyncStorage.getItem(languageKey) || Constant.defaultLanguage);
 }
 
 async function lessonsSource() {
-    return (await DefaultPreference.get('lessonsSource') || Constant.defaultLessonsSource);
+    return (await AsyncStorage.getItem(lessonsSourceKey) || Constant.defaultLessonsSource);
 }
 
 async function getLessonsSourcesChanged() {
-    return (await DefaultPreference.get('lessonsSourcesChanged') || 'false');
+    return (await AsyncStorage.getItem(lessonsSourcesChangedKey) || 'false');
 }
 
 async function setLanguagePref(language: string) {
-    await DefaultPreference.set('language', language)
+    await AsyncStorage.setItem(languageKey, language)
 }
 
 async function setLessonsSourcesChanged(value: string) {
-    await DefaultPreference.set('lessonsSourcesChanged', value)
+    await AsyncStorage.setItem(lessonsSourcesChangedKey, value)
 }
 
 async function setLessonsSourcesPref(lessonsSource: string) {
     await setLessonsSourcesChanged('true');
-    await DefaultPreference.set('lessonsSource', lessonsSource)
+    await AsyncStorage.setItem(lessonsSourceKey, lessonsSource)
 }
 
 

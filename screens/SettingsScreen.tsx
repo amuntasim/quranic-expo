@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import LanguageSettings from "../components/LanguageSettings";
 import LessonsSettings from "../components/LessonsSettings";
-import translation from '../services/translation';
+import i18n from '../services/translation';
 import ContentManager from '../managers/ContentManager';
 
 const wait = (timeout: any) => {
@@ -46,9 +46,9 @@ const SettingsScreen = (props: any) => {
     }, []);
 
     const languageSelected = (language: string) => {
-        if (language != translation.getLanguage()) {
+        if (language != i18n.currentLocale()) {
             PreferenceManager.setLanguagePref(language).then(() => {
-                translation.setLanguage(language);
+                i18n.local = language;
                 console.log(`Language changed to ${language}`)
                 settings.language = language;
                 settings.updatedAt = Date.now();
@@ -64,7 +64,7 @@ const SettingsScreen = (props: any) => {
                 settings.lessonsSource = lessonsSource;
                 settings.updatedAt = Date.now();
                 setSettings(settings);
-                ContentManager.lookup(lessonsSource).then((res) => {
+                ContentManager.chaptersLookup(lessonsSource).then((res) => {
                     console.log('lookup completed')
                 })
                 props.route.params.lessonsSourceChanged(lessonsSource)
@@ -87,13 +87,13 @@ const SettingsScreen = (props: any) => {
     }, [settings]);
 
     return (
-        <SafeAreaView style={Styles.container}>
+        <View style={Styles.container}>
             <ScrollView contentContainerStyle={Styles.scrollView}>
                 <LanguageSettings visibility={isVisibleLanguageSettings}
                                   setVisibility={setLanguageSettingsVisibility}
-                                  pageTitle={translation.language}
-                                  languageMap={translation.languages}
-                                  currentLocal={translation.getLanguage()}
+                                  pageTitle={i18n.t('language')}
+                                  languageMap={i18n.t('languages')}
+                                  currentLocal={i18n.currentLocale()}
                                   languageSelected={languageSelected}
                 />
 
@@ -102,29 +102,29 @@ const SettingsScreen = (props: any) => {
                         <ListItem.Title>Language</ListItem.Title>
                     </ListItem.Content>
                     <ListItem.Content right>
-                        <ListItem.Title>{translation.getString(`languages.${settings.language}`)}</ListItem.Title>
+                        <ListItem.Title>{i18n.t(`languages.${settings.language}`)}</ListItem.Title>
                     </ListItem.Content>
                 </ListItem>
                 <LessonsSettings visibility={isVisibleLessonSettings}
                                  setVisibility={setLessonSettingsVisibility}
-                                 pageTitle={translation.lessonsSource}
-                                 sourcesMap={translation.lessonsSources}
+                                 pageTitle={i18n.t('lessonsSource')}
+                                 sourcesMap={i18n.t('lessonsSources')}
                                  currentSource={settings.lessonsSource}
                                  lessonSourceSelected={lessonSourceSelected}
                 />
 
                 <ListItem key="lesson-download" bottomDivider onPress={() => setLessonSettingsVisibility(true)}>
                     <ListItem.Content>
-                        <ListItem.Title>{translation.lessonsSource}</ListItem.Title>
+                        <ListItem.Title>{i18n.t('lessonsSource')}</ListItem.Title>
                     </ListItem.Content>
                     <ListItem.Content right>
                         <ListItem.Title
-                            style={{width: 200}}>{translation.getString(`lessonsSources.${settings.lessonsSource}`)}</ListItem.Title>
+                            style={{width: 200}}>{i18n.t(`lessonsSources.${settings.lessonsSource}`)}</ListItem.Title>
                     </ListItem.Content>
                 </ListItem>
 
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 

@@ -2,10 +2,11 @@ import * as React from 'react';
 import Styles from '../components/Styles';
 import {Ionicons} from '@expo/vector-icons';
 
-import {RowViewText} from '../components/Themed';
-import {SafeAreaView, ScrollView} from "react-native";
+import {RowViewText, View} from '../components/Themed';
+import {FlatList, SafeAreaView, ScrollView} from "react-native";
 import ChaptersManager from '../managers/ChaptersManager';
 import PreferenceManager from '../managers/PreferenceManager';
+import {Order} from "./AccountScreen/components/Order";
 
 interface StateObject {
     chapters: any[]
@@ -30,7 +31,7 @@ export default function ChaptersScreen(props: any) {
     }, [chapters]);
 
     const checkContentStatus = async function () {
-        const lessonsSourcesChanged = await PreferenceManager.getLessonsSourcesChanged();
+        const lessonsSourcesChanged = 'true'//await PreferenceManager.getLessonsSourcesChanged();
         if (lessonsSourcesChanged === 'true') {
             console.log('checking content status');
             await PreferenceManager.setLessonsSourcesChanged('false')
@@ -65,11 +66,27 @@ export default function ChaptersScreen(props: any) {
     })
 
     return (
-        <SafeAreaView style={Styles.container}>
-            <ScrollView contentContainerStyle={Styles.scrollView}>
-                {chapterLists}
-            </ScrollView>
-        </SafeAreaView>
+        <View style={Styles.container}>
+            <FlatList
+                data={state.chapters}
+                // onRefresh={syncOrders}
+                // refreshing={isRefreshing}
+                keyExtractor={(item) => item}
+                renderItem={({item}) => {
+                    return (
+                        <RowViewText key={item} style={Styles.rowViewBox}
+                                     onPress={() => navigation.navigate('ChapterDetailScreen', {chapterName: item})}>
+                            {item.split('.')[1]}
+                        </RowViewText>
+                    );
+                }}
+            />
+        </View>
+        // <SafeAreaView style={Styles.container}>
+        //     <ScrollView contentContainerStyle={Styles.scrollView}>
+        //         {chapterLists}
+        //     </ScrollView>
+        // </SafeAreaView>
     );
 }
 

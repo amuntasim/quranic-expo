@@ -1,18 +1,18 @@
 import * as React from 'react';
 
-// import * as RNFS from 'react-native-fs';
+import * as RNFS from 'react-native-fs';
 import {View} from "react-native";
+import {Col, Row, Rows, Table, TableWrapper} from "react-native-table-component";
 
 import {Text} from '../components/Themed';
 import {verbFormInst} from '../components/VerbForms';
-import {Col, Row, Rows, Table, TableWrapper} from "react-native-table-component";
 import Styles from "../components/Styles";
 
-// const baseVerbsPath = `${RNFS.DocumentDirectoryPath}/quranic-verbs.json`
+const baseVerbsPath = `${RNFS.DocumentDirectoryPath}/quranic-verbs.json`
 
 async function getVerbs(opts: any) {
     try {
-        return []//JSON.parse(await RNFS.readFile(baseVerbsPath));
+        return JSON.parse(await RNFS.readFile(baseVerbsPath));
     } catch (e) {
         return []
     }

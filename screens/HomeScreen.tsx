@@ -14,7 +14,7 @@ import ProductDetail from "../components/ProductDetail";
 export default function HomeScreen(props: any) {
     return (
         <View style={Styles.container}>
-            <Text style={Styles.textStyle}>Home...</Text>
+            <Text style={Styles.text}>Home...</Text>
         </View>
     );
 }

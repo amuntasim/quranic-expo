@@ -1,5 +1,6 @@
 import {StyleSheet} from "react-native";
 import Colors from "../constants/Colors";
+
 const arabicFontSize = 30;
 
 export default StyleSheet.create({
@@ -65,7 +66,7 @@ export default StyleSheet.create({
     modalCloseIcon: {
         position: 'absolute',
         right: 0,
-        top:  0,
+        top: 0,
         fontWeight: 'bold'
     },
     headerIcon: {
@@ -80,6 +81,17 @@ export default StyleSheet.create({
         marginTop: 22,
         alignItems: "center",
     },
+    modalContent: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 0,
+        padding: 15
+    },
+    verbFormModal: {
+        position: "absolute",
+        top: 100,
+    },
+
     centeredView: {
         flex: 1,
         justifyContent: "center",
@@ -115,11 +127,7 @@ export default StyleSheet.create({
     buttonClose: {
         backgroundColor: "#2196F3",
     },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
-    },
+
     modalText: {
         marginBottom: 15,
         textAlign: "center"
@@ -147,6 +155,11 @@ export default StyleSheet.create({
         fontSize: 18,
         marginBottom: 10,
         padding: 10,
+    },
+    textCompact: {
+        ...Colors.lightBg,
+        fontSize: 18,
+        padding: 5,
     },
 
     textBold: {
@@ -342,8 +355,15 @@ export default StyleSheet.create({
     grayColor: {
         color: "#666666",
     },
+    whiteColor: {
+        color: "#ffffff",
+    },
     blankLine: {
         height: 30
+    },
+    selectedText: {
+        borderBottomColor: Colors.light.tint,
+        borderBottomWidth: 2
     },
     tableContainer: {flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff'},
     tableHead: {backgroundColor: '#f1f8ff'},

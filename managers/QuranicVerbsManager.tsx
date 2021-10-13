@@ -85,27 +85,23 @@ async function sarfKabeerMadi(opts: any) {
 
 async function sarfKabeerMudari(opts: any) {
     const vForm = verbFormInst(opts.verbDetail)
-
+    const data = {
+        tableHead: sarfKabeerTableHead,
+        columnTitle: sarfKabeerColHeads,
+        tableData: [
+            [vForm.mdrMP(), vForm.mdrM2(), vForm.mdrM1()],
+            [vForm.mdrFP(), vForm.mdrF2(), vForm.mdrF1()],
+            [vForm.mdrM2P(), vForm.mdrM22(), vForm.mdrM21()],
+            [vForm.mdrF2P(), vForm.mdrF22(), vForm.mdrF21()],
+            [vForm.mdrB3(), vForm.mdrB1()],
+        ]
+    }
     return (<View>
         <View style={Styles.rowJustified}>
-            <Text style={[Styles.paragraph, Styles.textBold]}>Sarf Kabeer (Mud'ari)</Text>
+            <Text style={[Styles.paragraph, Styles.textBold]}> Sarf Kabeer (Mudari)</Text>
         </View>
-        <Table borderStyle={{borderWidth: 1, borderColor: '#c8e1ff'}}>
-            <Row data={['Ism fael', 'Verbal noun', 'Active present / future', 'Active Past']} style={Styles.tableHead}
-                 textStyle={Styles.tableHeadTextCompact}/>
-            <Row data={[vForm.ismF(), vForm.msdr(), vForm.mdrM1(), vForm.mdM1()]} textStyle={Styles.tableTextBold}/>
-            <Row data={['Ism maf\'ul', 'Verbal noun', 'Passive present / future', 'Passive Past']}
-                 style={Styles.tableHead} textStyle={Styles.tableHeadTextCompact}/>
-            <Row data={[vForm.ismMfl(), vForm.msdr(), vForm.mdrMjM1(), vForm.mdMjM1()]}
-                 textStyle={Styles.tableTextBold}/>
-            <Row data={['نَهِيْ  Prohibition', 'أَمْرٌ  Command',]} style={Styles.tableHead}
-                 textStyle={Styles.tableHeadTextCompact}/>
-            <Row data={[vForm.nahiM1(), vForm.amrM1()]} textStyle={Styles.tableTextBold}/>
-            <Row data={['طَرْفُ الزَّماَنِ وَ المَكاَنِ']} style={Styles.tableHead}
-                 textStyle={Styles.tableHeadTextCompact}/>
-            <Row data={[vForm.zarf()]} textStyle={Styles.tableTextBold}/>
+        {renderTable2(data, [1, 1, 1], Styles.tableTextSmall)}
 
-        </Table>
     </View>)
 }
 

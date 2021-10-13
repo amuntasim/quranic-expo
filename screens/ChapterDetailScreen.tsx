@@ -1,7 +1,8 @@
 import * as React from 'react';
 import Styles from '../components/Styles';
 
-import {SafeAreaView, ScrollView} from 'react-native';
+import {ScrollView} from 'react-native';
+import {View} from '../components/Themed';
 import ChaptersManager from "../managers/ChaptersManager";
 import {ChapterDetailIntro, ChapterDetailContent, ChapterAssessment} from "../components/SmartComponent";
 
@@ -26,12 +27,12 @@ export default function ChapterDetailScreen(props: any) {
         })
     }, [chapter]);
     return (
-        <SafeAreaView style={Styles.container}>
+        <View style={Styles.container}>
             <ScrollView contentContainerStyle={Styles.scrollView}>
             <ChapterDetailIntro data={state.chapter.index}/>
             <ChapterDetailContent content={state.chapter.sections}/>
             {/*<ChapterAssessment content={state.chapter.assessments}/>*/}
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }

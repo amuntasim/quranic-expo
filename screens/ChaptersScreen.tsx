@@ -42,7 +42,7 @@ export default function ChaptersScreen(props: any) {
     React.useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
-                <Ionicons name={'md-refresh'} size={30} style={Styles.grayColor}
+                <Ionicons name={'md-refresh'} size={30} style={Styles.whiteColor}
                           onPress={async () => await checkContentStatus()}/>
             ),
         });

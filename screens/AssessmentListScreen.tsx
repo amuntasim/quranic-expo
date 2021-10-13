@@ -1,13 +1,13 @@
 import * as React from 'react';
 import Styles from '../components/Styles';
 
-import {RowViewText, Text} from '../components/Themed';
+import {RowViewText, Text, View} from '../components/Themed';
 import {Modal, SafeAreaView, ScrollView, Alert} from "react-native";
 import AssessmentsManager from '../managers/AssessmentsManager';
 import Assessments from '../components/assessments/index';
 
 import {Ionicons} from "@expo/vector-icons";
-// import * as RNFS from "react-native-fs";
+import * as RNFS from "react-native-fs";
 import {unzip} from "react-native-zip-archive";
 import Constant from "../constants/Values";
 
@@ -51,30 +51,30 @@ export default function AssessmentListScreen(props: any) {
 
 
     const reloadAssessments = async function () {
-        // const tmpFileName = `${RNFS.TemporaryDirectoryPath}/${Date.now()}.zip`;
-        // RNFS.downloadFile({
-        //     fromUrl: `${Constant.fileBaseUrl}assessments.zip`,
-        //     toFile: tmpFileName,
-        // }).promise.then((r) => {
-        //     const charset = 'UTF-8';
-        //     const targetPath = `${RNFS.DocumentDirectoryPath}`;
-        //     RNFS.unlink(`${RNFS.DocumentDirectoryPath}/assessments`)
-        //
-        //     unzip(tmpFileName, targetPath, charset)
-        //         .then((path) => {
-        //             console.log(`unzip completed at ${path}`);
-        //             loadAssessments();
-        //         })
-        //         .catch((error) => {
-        //             console.error(error)
-        //         })
-        // });
+        const tmpFileName = `${RNFS.TemporaryDirectoryPath}/${Date.now()}.zip`;
+        RNFS.downloadFile({
+            fromUrl: `${Constant.fileBaseUrl}assessments.zip`,
+            toFile: tmpFileName,
+        }).promise.then((r) => {
+            const charset = 'UTF-8';
+            const targetPath = `${RNFS.DocumentDirectoryPath}`;
+            RNFS.unlink(`${RNFS.DocumentDirectoryPath}/assessments`)
+
+            unzip(tmpFileName, targetPath, charset)
+                .then((path) => {
+                    console.log(`unzip completed at ${path}`);
+                    loadAssessments();
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
+        });
     }
 
     React.useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
-                <Ionicons name={'md-refresh'} size={30} style={Styles.grayColor}
+                <Ionicons name={'md-refresh'} size={30} style={Styles.whiteColor}
                           onPress={async () => await updateAssessmentsAlert()}/>
             ),
         });
@@ -107,7 +107,7 @@ export default function AssessmentListScreen(props: any) {
         return list.length ? list : <Text onPress={()=> updateAssessmentsAlert()}>No Assessments found, Download!</Text>
     }
     return (
-        <SafeAreaView style={Styles.container}>
+        <View style={Styles.container}>
             <ScrollView contentContainerStyle={Styles.scrollView}>
                 <Modal
                     // animationType={"slide"}
@@ -125,7 +125,7 @@ export default function AssessmentListScreen(props: any) {
                 </Modal>
                 {assessmentLists()}
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 

@@ -3,12 +3,11 @@ import { View, Dimensions } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import Colors from "../../utils/Colors";
 import {Text} from "../Themed";
-import Styles from "../Styles";
 
 const { width, height, _text } = Dimensions.get("window");
 
 const Loader = () => {
-    const text = _text || 'Processing, please wait!'
+    const text = _text || 'Loading...'
   return (
     <View
       style={{
@@ -17,7 +16,7 @@ const Loader = () => {
         width,
         height,
         backgroundColor: "rgba(128, 129, 130,0.5)",
-        zIndex: 1001,
+        zIndex: 1101,
         justifyContent: "center",
       }}
     >

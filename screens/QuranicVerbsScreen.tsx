@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState} from 'react';
 import Styles from '../components/Styles';
 
 import {Text, View} from '../components/Themed';
@@ -9,6 +10,7 @@ import QuranicVerbsManager from '../managers/QuranicVerbsManager';
 import {Ionicons} from "@expo/vector-icons";
 import * as RNFS from "react-native-fs";
 import Constant from "../constants/Values";
+import Loader from "../components/Loaders/Loader";
 
 
 const verbForms = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
@@ -56,6 +58,7 @@ export default function QuranicVerbsScreen(props: any) {
     const [currentRootLetter, setCurrentRootLetter] = React.useState('fa');
     const [verbDetail, setVerbDetail] = React.useState(null);
     const [verbOrder, setVerbOrder] = React.useState('count-desc');
+    const [loading, setLoading] = useState(true)
 
     let ref_faQalimah: TextInput | null;
     let ref_ainQalimah: TextInput | null;
@@ -74,6 +77,7 @@ export default function QuranicVerbsScreen(props: any) {
 
     React.useEffect(() => {
         loadVerbs();
+        setLoading(true);
         setSelectedRoot('')
         setSelectedForm('')
         setSelectedMeaning('')
@@ -81,6 +85,7 @@ export default function QuranicVerbsScreen(props: any) {
 
     // filter verbs
     React.useEffect(() => {
+        setLoading(true);
         let tmpResult = [...baseVerbs];
 
         if (selectedForm)
@@ -102,6 +107,7 @@ export default function QuranicVerbsScreen(props: any) {
             tmpResult.sort((a, b) => b.freq - a.freq)
         }
         setVerbs(tmpResult);
+        setLoading(false);
     }, [selectedForm, selectedMeaning, selectedRoot, verbOrder]);
 
     const updateVerbsAlert = () =>
@@ -156,6 +162,28 @@ export default function QuranicVerbsScreen(props: any) {
         })
     }
 
+    function amrChart() {
+        QuranicVerbsManager.amrChart({verbDetail}).then(function (content: any) {
+            setModalBodyContent(content);
+        })
+    }
+
+    function nahiChart() {
+        QuranicVerbsManager.nahiChart({verbDetail}).then(function (content: any) {
+            setModalBodyContent(content);
+        })
+    }
+    function madiMajhul() {
+        QuranicVerbsManager.madiMajhul({verbDetail}).then(function (content: any) {
+            setModalBodyContent(content);
+        })
+    }
+    function mudariMajhul() {
+        QuranicVerbsManager.mudariMajhul({verbDetail}).then(function (content: any) {
+            setModalBodyContent(content);
+        })
+    }
+
     const modalHead = function () {
         if (verbDetail) {
             return (<View>
@@ -168,14 +196,25 @@ export default function QuranicVerbsScreen(props: any) {
                     <TouchableOpacity onPress={() => sarfSagheer()}>
                         <Text style={Styles.textButtonCompact}>Sarf Sagheer</Text>
                     </TouchableOpacity>
-                    <Text> </Text>
                     <TouchableOpacity onPress={() => sarfKabeerMadi()}>
-                        <Text style={Styles.textButtonCompact}>Sarf Kabeer (Mad'i)</Text>
+                        <Text style={Styles.textButtonCompact}>Sarf الْمَاضِي</Text>
                     </TouchableOpacity>
-                    <Text> </Text>
                     <TouchableOpacity onPress={() => sarfKabeerMudari()}>
-                        <Text style={Styles.textButtonCompact}>Sarf Kabeer (Mud'ari)</Text>
+                        <Text style={Styles.textButtonCompact}>Sarf الْمُضَارِعُ</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={() => amrChart()}>
+                        <Text style={Styles.textButtonCompact}>Amr أَمْرٌ</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => nahiChart()}>
+                        <Text style={Styles.textButtonCompact}>Nahi نَهِيْ</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => madiMajhul()}>
+                        <Text style={Styles.textButtonCompact}>Majhul الْمَاضِي</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => mudariMajhul()}>
+                        <Text style={Styles.textButtonCompact}>Majhul الْمُضَارِعُ</Text>
+                    </TouchableOpacity>
+
                 </View>
             </View>)
         }
@@ -200,6 +239,7 @@ export default function QuranicVerbsScreen(props: any) {
     }
 
     const verbFormSelected = (selected: string) => {
+        setLoading(true)
         setSelectedForm(selected);
         setFormModalVisible(false);
     }
@@ -225,12 +265,14 @@ export default function QuranicVerbsScreen(props: any) {
     }
 
     const combineRootLetters = () => {
+        setLoading(true);
         setSelectedRoot(selectedFaQalimah + selectedAinQalimah + selectedLamQalimah);
         setRootModalVisible(false);
     }
     return (
         <View style={Styles.container}>
-            <Overlay overlayStyle={{marginTop: 50}} isVisible={isModalVisible}
+            {loading ? <Loader/> : <></>}
+            <Overlay overlayStyle={{marginTop: 50, padding: 2, paddingBottom: 15}} isVisible={isModalVisible}
                      onBackdropPress={() => setModalVisible(false)}>
                 <ScrollView>
                     {modalHead()}
